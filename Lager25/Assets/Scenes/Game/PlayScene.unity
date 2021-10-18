@@ -202,7 +202,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1731903308}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &414716134
 Mesh:
@@ -724,7 +724,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1731903308}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &752094852
 MeshFilter:
@@ -4866,6 +4866,7 @@ GameObject:
   - component: {fileID: 1731903310}
   - component: {fileID: 1731903309}
   - component: {fileID: 1731903311}
+  - component: {fileID: 1731903307}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4873,6 +4874,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1731903307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731903306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a1cd00475ae9943bd1354d35699e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_data:
+    Camera: {fileID: 214477041}
+    LookX: 0
+    LookY: 0
+    sensitivity: 1
+    MinY: -60
+    MaxY: 60
 --- !u!4 &1731903308
 Transform:
   m_ObjectHideFlags: 0
@@ -4884,8 +4904,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 752094850}
   - {fileID: 214477042}
+  - {fileID: 752094850}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4902,7 +4922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    Speed: 250
+    Speed: 150
     Movement: {x: 0, y: 0, z: 0}
     CharacterController: {fileID: 0}
 --- !u!114 &1731903310
@@ -4919,7 +4939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: b54b2225b4e08ce4e9088f3686974c63,
     type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -4934,7 +4954,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731903309}
-        m_MethodName: Strafe
+        m_MethodName: Move
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4947,7 +4967,18 @@ MonoBehaviour:
     m_ActionId: 0647d190-7a8d-4cc7-a428-64f8d562d141
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1731903307}
+        m_MethodName: LookUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: de3d9d0e-227c-4c80-b24f-73e1cbbddd32
     m_ActionName: Player/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]
   - m_PersistentCalls:
