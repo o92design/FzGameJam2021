@@ -1,12 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityEditor.Build.Reporting;
+using System.Collections.Generic;
 
 
 public class GameBuild
 {
-  public static string[] m_scenes = { "Assets/Scenes/PlayScene.unity" };
-  
   [MenuItem("Tools/BuildGame/Windows 64 Build")]
   public static void BuildGameWin64()
   {
@@ -25,6 +24,17 @@ public class GameBuild
     string buildpath = "Build/Lager25_" + targetName + "/";
     BuildOptions buildoptions = BuildOptions.None;
 
+    EditorBuildSettingsScene[] buildScenes = EditorBuildSettings.scenes;
+    List<string> scenes = new List<string>();
+
+    for(int index = 0; index < buildScenes.Length; ++index)
+    {
+      if(buildScenes[index].path.Contains("/Game/"))
+      {
+        scenes.Add(buildScenes[index].path);
+      }
+    }
+
     switch(p_target)
     {
       case BuildTarget.StandaloneWindows64:
@@ -33,8 +43,9 @@ public class GameBuild
       case BuildTarget.WebGL:
         break;
     }
+
     BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-    buildPlayerOptions.scenes = m_scenes;
+    buildPlayerOptions.scenes = scenes.ToArray();
     buildPlayerOptions.target = p_target;
     buildPlayerOptions.locationPathName = buildpath;
     buildPlayerOptions.options = buildoptions;
@@ -43,15 +54,21 @@ public class GameBuild
 
     BuildSummary summary = report.summary;
 
-    bool assertResult = summary.result == BuildResult.Succeeded;
-    Debug.Assert(assertResult, "Lager25 Build " + PlayerSettings.bundleVersion + ":" + summary.result);
-    Debug.Assert(assertResult, "Version:" + PlayerSettings.bundleVersion);
-    Debug.Assert(assertResult, "Size(Mb):" + (summary.totalSize / 1024f) / 1024f );
-    Debug.Assert(assertResult, "Time:" + summary.totalTime);
-    Debug.Assert(assertResult, "Started:" + summary.buildStartedAt);
-    Debug.Assert(assertResult, "Ended:" + summary.buildEndedAt);
-    Debug.Assert(assertResult, "Errors:" + summary.totalErrors);
-    Debug.Assert(assertResult, "Warnings:" + summary.totalWarnings);
-    Debug.Assert(assertResult, summary.outputPath);
+    Debug.Log("Lager25 Build " + PlayerSettings.bundleVersion + ":" + summary.result);
+    Debug.Log("Version:" + PlayerSettings.bundleVersion);
+    Debug.Log("Scenes built:" + scenes.Count);
+    int sceneIndex = 1;
+    foreach(var scene in scenes)
+    {
+      Debug.Log("Scene " + sceneIndex + "/" + scenes.Count + ":" + scene);
+      ++sceneIndex;
+    }
+    Debug.Log("Size(Mb):" + (summary.totalSize / 1024f) / 1024f );
+    Debug.Log("Time:" + summary.totalTime);
+    Debug.Log("Started:" + summary.buildStartedAt);
+    Debug.Log("Ended:" + summary.buildEndedAt);
+    Debug.Log("Errors:" + summary.totalErrors);
+    Debug.Log("Warnings:" + summary.totalWarnings);
+    Debug.Log(summary.outputPath);
   }
 }
