@@ -24,8 +24,8 @@ public class PlayerRotation : MonoBehaviour
 
   public void LookUpdate(InputAction.CallbackContext p_input)
   {
-    m_data.LookX += p_input.ReadValue<Vector2>().x * m_data.sensitivity * Time.deltaTime;
-    m_data.LookY -= p_input.ReadValue<Vector2>().y * m_data.sensitivity * Time.deltaTime;
+    m_data.LookX += p_input.ReadValue<Vector2>().x * m_data.sensitivity;
+    m_data.LookY -= p_input.ReadValue<Vector2>().y * m_data.sensitivity;
   }
 
   void Look()

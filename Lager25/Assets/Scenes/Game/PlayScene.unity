@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 214477041}
   - component: {fileID: 214477040}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1705,7 +1705,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-8380
+  m_Name: pb_Mesh15714
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4386,7 +4386,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-23134
+  m_Name: pb_Mesh15654
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4890,9 +4890,9 @@ MonoBehaviour:
     Camera: {fileID: 214477041}
     LookX: 0
     LookY: 0
-    sensitivity: 1
-    MinY: -60
-    MaxY: 60
+    sensitivity: 0.1
+    MinY: -90
+    MaxY: 90
 --- !u!4 &1731903308
 Transform:
   m_ObjectHideFlags: 0
@@ -4901,7 +4901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731903306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 214477042}
@@ -4921,10 +4921,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f40d49e9e42324ea89bb5dba7d363e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_data:
-    Speed: 150
-    Movement: {x: 0, y: 0, z: 0}
-    CharacterController: {fileID: 0}
+  m_Data:
+    m_Character: {fileID: 1731903311}
+    m_Camera: {fileID: 214477041}
+    Jump: 0
+    m_Friction: 6
+    m_Gravity: 20
+    m_JumpForce: 8
+    m_AirControl: 0.3
+    m_AutoBunnyHop: 0
+    m_MoveDirectionNorm: {x: 0, y: 0, z: 0}
+    m_PlayerVelocity: {x: 0, y: 0, z: 0}
+  m_GroundSettings:
+    MaxSpeed: 15
+    Deceleration: 14
+    Acceleration: 10
+  m_AirSettings:
+    MaxSpeed: 6
+    Deceleration: 2
+    Acceleration: 2
+  m_StrafeSettings:
+    MaxSpeed: 1
+    Deceleration: 50
+    Acceleration: 50
 --- !u!114 &1731903310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4951,21 +4970,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1731903309}
-        m_MethodName: Move
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-    m_ActionId: 0647d190-7a8d-4cc7-a428-64f8d562d141
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1731903307}
@@ -5040,6 +5044,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 168f060c-4c24-43b2-981b-c5f0e42078e7
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1731903309}
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 871010a2-a0c3-4435-8c5f-1a0e3bf784c6
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
