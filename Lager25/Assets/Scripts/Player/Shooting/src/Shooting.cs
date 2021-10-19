@@ -7,11 +7,15 @@ using UnityEngine.InputSystem;
 public struct ShootingData
 {
   public bool Shooting;
+  public Transform m_SpawnPoint;
+  public GameObject m_BulletHole;
+  public float m_ShootingCooldown;
 }
 
 public class Shooting : MonoBehaviour
 {
   public ShootingData m_Data;
+  private bool m_canShoot = true;
 
   // Start is called before the first frame update
   void Start()
@@ -22,9 +26,38 @@ public class Shooting : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if(m_Data.Shooting)
+    if(m_Data.Shooting && m_canShoot)
     {
       Debug.Log("Shooting");
+      ShootRayFromSpawnPoint();
+      CooldownStart();
+    }
+  }
+  public void CooldownStart()
+  {
+    StartCoroutine(CooldownCoroutine());
+  }
+  IEnumerator CooldownCoroutine()
+  {
+    m_canShoot = false;
+    yield return new WaitForSeconds(m_Data.m_ShootingCooldown);
+    m_canShoot = true;
+  }
+
+  private void ShootRayFromSpawnPoint()
+  {
+    RaycastHit hit;
+    Debug.DrawRay(m_Data.m_SpawnPoint.position, m_Data.m_SpawnPoint.forward, Color.yellow, 1f);
+    if (Physics.Raycast(m_Data.m_SpawnPoint.position, m_Data.m_SpawnPoint.forward, out hit, 200f))
+    {
+      Debug.DrawLine(m_Data.m_SpawnPoint.position, hit.point, Color.green, 1f);
+      Debug.Log("Hit " + hit.collider.gameObject.name);
+      Vector3 position = hit.point;
+      GameObject decal = Instantiate(m_Data.m_BulletHole);
+      decal.transform.position = position;
+      decal.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, hit.normal);
+      decal.transform.position -= decal.transform.forward * 0.02f;
+      Destroy(decal, 3f);
     }
   }
 
