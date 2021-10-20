@@ -1,0 +1,15 @@
+{
+    "name": "ZoneArea",
+    "references": [
+        "GUID:683f657cedd701042a8e891a9036b89c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
