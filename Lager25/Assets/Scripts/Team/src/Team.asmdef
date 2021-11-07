@@ -1,7 +1,7 @@
 {
-    "name": "ZoneArea_export",
+    "name": "Team",
     "references": [
-        "GUID:df856c08f84a813418607a6d145d8b6c"
+        "GUID:ab549a99d87dd4649a22c176cb0a9c9c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

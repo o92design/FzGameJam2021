@@ -2,5 +2,5 @@
 
 public interface IZoneArea
 {
-  int GetTeamOwner();
+  Team GetTeamOwner();
 }

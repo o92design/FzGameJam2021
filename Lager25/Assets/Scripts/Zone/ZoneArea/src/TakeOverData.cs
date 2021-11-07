@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TakeOverData : MonoBehaviour
 {
-  public int Team;
+  public Team Team;
   public int TakeOverRate;
-  public Color Color;
+
+  public void Start()
+  {
+    if(Team == null)
+      Team = GetComponent<Team>();
+  }
 }

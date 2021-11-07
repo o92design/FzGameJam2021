@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct ZoneData
 {
-  public int Team;
+  public Team Team;
   
   public int TakeOverValue;
   public int MaxTakeOverValue;
@@ -22,12 +22,12 @@ public class ZoneArea : MonoBehaviour, IZoneArea
   private TakeOverData m_TeamTakeOver;
 
   [SerializeField]
-  private Dictionary<int, List<TakeOverData>> m_TakeOvers = new Dictionary<int, List<TakeOverData>>();
+  private Dictionary<Team, List<TakeOverData>> m_TakeOvers = new Dictionary<Team, List<TakeOverData>>();
   private bool m_initiatedCount = false;
 
   public void Awake()
   {
-    m_Data.TeamColor = GetComponent<Renderer>().material.color;
+    //m_Data.TeamColor = GetComponent<Renderer>().material.color;
   }
 
   public void LateUpdate()
@@ -45,25 +45,27 @@ public class ZoneArea : MonoBehaviour, IZoneArea
   /// </summary>
   public void CalculateTakeOverRate()
   {
-    if(m_TakeOvers.Count == 0)
+    if(m_TakeOvers.Values.Count == 0)
     {
       m_Data.CurrentTakeOverRate = 0;
       return;
     }
 
-    Dictionary<int, int> teamTakeOverRate = new Dictionary<int, int>();
-    foreach (int team in m_TakeOvers.Keys)
+    Dictionary<Team, int> teamTakeOverRate = new Dictionary<Team, int>();
+    foreach (Team team in m_TakeOvers.Keys)
     {
       teamTakeOverRate.Add(team, 0);
       if(m_Data.Team != team)
       {
         foreach (TakeOverData data in m_TakeOvers[team])
         {
-          teamTakeOverRate[team] += m_Data.Team == 0 ? data.TakeOverRate :
-                                    m_Data.Team != data.Team ? data.TakeOverRate : -data.TakeOverRate;
+          teamTakeOverRate[team] += m_Data.Team == null ? data.TakeOverRate :
+                                    m_Data.Team.GetNumber() != data.Team.GetNumber() ? -data.TakeOverRate : data.TakeOverRate;
 
           m_TeamTakeOver = data;
         }
+
+        Debug.Log(team + " takeover Rate: " + teamTakeOverRate[team]);
       }
 
       m_Data.CurrentTakeOverRate = teamTakeOverRate[team];
@@ -72,7 +74,13 @@ public class ZoneArea : MonoBehaviour, IZoneArea
 
   IEnumerator TakeOver()
   {
-    if(m_Data.TakeOverValue >=  m_Data.MaxTakeOverValue)
+    if(m_Data.TakeOverValue <= 0 && m_Data.CurrentTakeOverRate < 0)
+    {
+      m_Data.TakeOverValue = 0;
+      m_Data.Team = null;
+    }
+
+    if(m_Data.TakeOverValue >=  m_Data.MaxTakeOverValue && m_Data.CurrentTakeOverRate > 0)
     {
       m_Data.TakeOverValue = m_Data.MaxTakeOverValue;
       ChangeOwner(m_TeamTakeOver);
@@ -80,7 +88,7 @@ public class ZoneArea : MonoBehaviour, IZoneArea
     }
 
     m_initiatedCount = true;
-    ChangeZoneColor(m_TeamTakeOver.Color);
+    ChangeZoneColor(m_TeamTakeOver.Team.GetColor());
     yield return new WaitForSeconds(m_Data.TakeOverSeconds * 0.5f);
    
     m_Data.TakeOverValue += m_Data.CurrentTakeOverRate;
@@ -103,7 +111,7 @@ public class ZoneArea : MonoBehaviour, IZoneArea
   public void ChangeOwner(TakeOverData p_takeOverData)
   {
     m_Data.Team = p_takeOverData.Team;
-    Color color = p_takeOverData.Color;
+    Color color = p_takeOverData.Team.GetColor();
     m_Data.TeamColor = color;
     ChangeZoneColor(color);
   }
@@ -118,12 +126,14 @@ public class ZoneArea : MonoBehaviour, IZoneArea
       m_TakeOvers.Add(p_takeOverData.Team, new List<TakeOverData>());
       m_TakeOvers[p_takeOverData.Team].Add(p_takeOverData);
       addedData = true;
+      Debug.Log("Added a new Team to take over the Zone!");
     }
     // Note(Oskar): IF the team exist then add only take over data
     else if (!m_TakeOvers[p_takeOverData.Team].Contains(p_takeOverData))
     {
       m_TakeOvers[p_takeOverData.Team].Add(p_takeOverData);
       addedData = true;
+      Debug.Log("Team Exist - add takeover data for the Team:" + p_takeOverData.Team);
     }
 
     return addedData;
@@ -157,7 +167,7 @@ public class ZoneArea : MonoBehaviour, IZoneArea
     RemoveTakeOverData(exitedTakeOver);
   }
 
-  public int GetTeamOwner()
+  public Team GetTeamOwner()
   {
     return m_Data.Team;
   }
