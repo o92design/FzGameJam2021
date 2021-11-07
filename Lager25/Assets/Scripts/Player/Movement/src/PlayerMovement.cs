@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
       m_Data.m_Camera = Camera.main;
 
     m_CamTran = m_Data.m_Camera.transform;
+    Cursor.lockState = CursorLockMode.Locked;
   }
 
   public void Move(InputAction.CallbackContext p_Context)

@@ -1,0 +1,15 @@
+{
+    "name": "ZoneArea_export",
+    "references": [
+        "GUID:df856c08f84a813418607a6d145d8b6c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

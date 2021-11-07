@@ -1,0 +1,15 @@
+{
+    "name": "Team",
+    "references": [
+        "GUID:ab549a99d87dd4649a22c176cb0a9c9c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
